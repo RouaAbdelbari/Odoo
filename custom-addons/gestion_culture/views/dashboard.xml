@@ -1,0 +1,63 @@
+<odoo>
+    <data>
+        <record model="ir.actions.act_window" id="action_plantation_calendar">
+            <field name="name">Calendrier de plantation</field>
+            <field name="res_model">gestion_culture.plante</field>
+            <field name="view_mode">calendar,tree,form,graph,pivot</field>
+            <field name="view_id" ref="view_plantation_calendar"/>
+        </record>
+  
+        <record model="ir.actions.act_window" id="gestion_culture.action_window_parcelles">
+            <field name="name">Liste des parcelles</field>
+            <field name="res_model">gestion_culture.parcelle</field>
+            <field name="view_mode">kanban,tree,form,graph,pivot</field>
+            <field name="view_id" ref="gestion_culture.parcelle_kanban_view"/>
+        </record>
+          <record model="ir.actions.act_window" id="action_employee_form">
+            <field name="name">Liste des techniciens</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_mode">kanban,tree,form,graph,pivot</field>
+            <field name="view_id" ref="view_employee_kanban"/>
+        </record>
+
+        <record model="ir.ui.view" id="dashboard_form_view">
+            <field name="name">Dashboard Form</field>
+            <field name="model">board.board</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="My Dashboard">
+                    <board style="1-2">
+                        <column>
+                            <action
+                              string="Calendrier de Plantation"
+                              name="%(action_plantation_calendar)d" 
+                            />
+                        </column>
+                        <column>
+                            <action
+                              string="Liste des techniciens"
+                              name="%(action_employee_form)d" 
+                            />
+                        </column>
+                         <column>
+                            <action
+                              string="Liste des parcelles"
+                              name="%(gestion_culture.action_window_parcelles)d" 
+                            />
+                        </column>
+                    </board>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_dashboard" model="ir.actions.act_window">
+            <field name="name">Tableau de bord de culture</field>
+            <field name="res_model">board.board</field>
+            <field name="view_mode">form</field>
+            <field name="usage">menu</field>
+            <field name="view_id" ref="dashboard_form_view"/>
+        </record>
+
+      <menuitem name="Graphiques et statistiques" id="gestion_culture.menu_1_charts" parent="gestion_culture.menu_1" action="action_dashboard"/>
+    </data>
+</odoo>

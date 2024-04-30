@@ -1,0 +1,62 @@
+<odoo>
+    <data>
+        <!-- Vues -->
+        <record id="view_planification_production_list_alimentaire" model="ir.ui.view">
+            <field name="name">Planification de Production alimentaire Tree View</field>
+            <field name="model">production.planning</field>
+            <field name="arch" type="xml">
+                <tree string="Planifications de production ">
+                    <field name="responsable_id"/>
+                    <field name="plante_id"/>
+                    <field name="date_planifiee"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_planification_production_list_laitiere" model="ir.ui.view">
+            <field name="name">Planification de Production laitière Tree View</field>
+            <field name="model">production.planning</field>
+            <field name="arch" type="xml">
+                <tree string="Planifications de production ">
+                    <field name="technicien_id"/>
+                    <field name="vache_id"/>
+                    <field name="date_planifiee"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Actions -->
+        <record id="action_view_planification_production_list_laitiere" model="ir.actions.act_window">
+            <field name="name">Liste des Planifications de Production laitière</field>
+            <field name="res_model">production.planning</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="view_id" ref="view_planification_production_list_laitiere"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Aucune planification de production laitière n'est disponible.
+                    <br/> Cliquez sur Créer pour en ajouter une.
+                </p>
+            </field>
+        </record>
+
+        <record id="action_view_planification_production_list_alimentaire" model="ir.actions.act_window">
+            <field name="name">Liste des Planifications de Production alimentaire</field>
+            <field name="res_model">production.planning</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="view_id" ref="view_planification_production_list_alimentaire"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Aucune planification de production alimentaire n'est disponible.
+                    <br/> Cliquez sur Créer pour en ajouter une.
+                </p>
+            </field>
+        </record>
+
+        <!-- Menu Items -->
+        <menuitem id="menu_liste_planification" name="Planification de la production " parent="production.gestion" sequence="11" />
+        <menuitem id="menu_liste_planification_laitiere" name="Production laitière" parent="menu_liste_planification" action="action_view_planification_production_list_laitiere"/>
+        <menuitem id="menu_liste_planification_alimentaire" name="Production alimentaire" parent="menu_liste_planification" action="action_view_planification_production_list_alimentaire"/>
+    </data>
+</odoo>

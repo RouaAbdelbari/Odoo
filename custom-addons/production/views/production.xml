@@ -1,0 +1,39 @@
+<odoo>
+  <data>
+    <!-- Vue pour la production alimentaire -->
+    <record id="view_production_aliment_tree" model="ir.ui.view">
+      <field name="name">product.template.aliment.tree</field>
+      <field name="model">product.template</field>
+      <field name="arch" type="xml">
+        <tree string="Production Alimentaire">
+          <field name="quantite"/>
+          <field name="date"/>
+          <field name="plante_id"/>
+          <field name="responsable_id"/> 
+        </tree>
+      </field>
+    </record>
+
+    <record id="view_production_aliment_kanban" model="ir.ui.view">
+      <field name="name">product.template.aliment.kanban</field>
+      <field name="model">product.template</field>
+      <field name="arch" type="xml">
+        <kanban class="oe_background_grey">
+          <field name="quantite"/>
+          <field name="date"/>
+          <field name="plante_id"/>
+          <field name="responsable_id"/>                   
+        </kanban>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="production.action_window">
+      <field name="name">Product</field>
+      <field name="res_model">product.template</field>
+      <field name="view_mode">tree,form,graph</field>
+      <field name="view_id" ref="view_production_aliment_tree"/>
+    </record> 
+     
+    <menuitem name="Produits alimentaires" id="production.menu_produit_aliment_list" parent="production.menu_produit_list" action="production.action_window"/>
+  </data>
+</odoo>

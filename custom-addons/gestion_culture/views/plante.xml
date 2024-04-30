@@ -1,0 +1,197 @@
+<odoo>
+    <data>
+        <!-- Vue formulaire pour une nouvelle plante -->
+        <record id="view_plante_form" model="ir.ui.view">
+            <field name="name">Formulaire Plante</field>
+            <field name="model">gestion_culture.plante</field>
+            <field name="arch" type="xml">
+                <form string="Formulaire Plante">
+        
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name_seq" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="name"/>
+                            <field name="image" widget="image" class="oe_avatar" string="" />
+                            <field name="parcelle"/>
+                            <field name="date"/>
+                            <field name="date_prevue_recolte"/>
+                             <field name="type"/>
+                            
+                            <field name="longueur"/>
+                            </group>
+                            <group>
+                            
+                            <field name="responsable_id"/>
+                         <field name="statut"/>
+                        </group>
+                        <notebook>
+                            <page string="Parcelle" name="parcelle">
+                                <field name="variation_longueur_ids">
+                                    <tree>
+                                        <field name="date_du_jour"/>
+                                        <field name="longueur" widget="float_time" string="Longueur (cm)"/>
+                                    </tree>
+                                </field>
+                                <field name="variation_quantite_ids">
+                                    <tree>
+                                        <field name="date_du_jour"/>
+                                        <field name="quantite" string="Quantité (Kilos)" help="Quantité en kilos"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Notes" name="notes">
+                                
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action pour ouvrir le formulaire d'une nouvelle plante -->
+        <record model="ir.actions.act_window" id="action_new_plante">
+            <field name="name">Nouvelle Plante</field>
+            <field name="res_model">gestion_culture.plante</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_plante_form"/>
+            <field name="target">current</field> <!-- Modifier cette ligne -->
+        </record>
+        
+
+        <!-- Vue calendrier pour le calendrier de plantation -->
+        <record id="view_plantation_calendar" model="ir.ui.view">
+            <field name="name">Calendrier de Plantation</field>
+            <field name="model">gestion_culture.plante</field>
+            <field name="arch" type="xml">
+                <calendar string="Calendrier de Plantation" date_start="date">
+                    <field name="name" filters="1" invisible="1"/>
+                    <field name="responsable_id" filters="1" invisible="1"/>
+
+
+                </calendar>
+            </field>
+        </record>
+        
+
+        <!-- Action pour ouvrir la vue calendrier de plantation -->
+        <record model="ir.actions.act_window" id="action_plantation_calendar">
+            <field name="name">Calendrier de plantation</field>
+            <field name="res_model">gestion_culture.plante</field>
+            <field name="view_mode">calendar,tree,form,pivot,graph</field>
+            <field name="view_id" ref="view_plantation_calendar"/>
+        </record>
+
+        <!-- Vue calendrier pour le calendrier de recolte -->
+        <record id="view_recolte_calendar" model="ir.ui.view">
+            <field name="name">Calendrier de Recolte</field>
+            <field name="model">gestion_culture.plante</field>
+            <field name="arch" type="xml">
+                <calendar string="Calendrier de Recolte" date_start="date">
+                    <field name="name" filters="1" invisible="1"/>
+                    <field name="responsable_id" filters="1" invisible="1"/>
+
+
+                </calendar>
+            </field>
+        </record>
+
+        <!-- Action pour ouvrir la vue calendrier de recolte -->
+        <record model="ir.actions.act_window" id="action_recolte_calendar">
+            <field name="name">Calendrier de recolte</field>
+            <field name="res_model">gestion_culture.plante</field>
+            <field name="view_mode">calendar,tree,form,pivot,graph</field>
+            <field name="view_id" ref="view_recolte_calendar"/>
+        </record>
+          <!-- Vue kanban pour afficher les plantes -->
+        <record id="gestion_culture.plante_kanban_view" model="ir.ui.view">
+            <field name="name">Kanban plantes</field>
+            <field name="model">gestion_culture.plante</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="o_kanban_record">
+                                <div class="oe_kanban_global_click">
+                                    <div class="oe_kanban_image">
+                                        <img t-att-src="kanban_image('gestion_culture.plante', 'image', record.id.raw_value)" style="height: 100px; float: left; width: 40%;"/>
+                                    </div>
+                                    <div style="margin-left: 45%; margin-top: 5%; width: 55%; text-align: left;">
+                                        <div class="oe_kanban_details">
+    <div class="kanban-name"><strong><field name="name"/></strong></div>
+    <div class="kanban-date_prevue_recolte"><field name="date_prevue_recolte"/></div>
+    <div class="kanban-statut"><field name="statut"/></div>
+
+    
+</div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+         <!-- Vue liste pour toutes les plante -->
+        <record id="gestion_culture.plante_tree_view" model="ir.ui.view">
+            <field name="name">Liste des plantes</field>
+            <field name="model">gestion_culture.plante</field>
+            <field name="arch" type="xml">
+                <tree decoration-success="statut == 'recolte'">
+                   <field name="name_seq"/>
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="date_prevue_recolte"/>
+                    <field name="statut" decoration-warning="statut == 'recolte'" decoration-danger="statut == 'en_cours'"/>
+
+                </tree>
+            </field>
+        </record>
+          <!-- Vue de recherche pour les plantes -->
+        <record model="ir.ui.view" id="gestion_culture.plante_view_search">
+            <field name="name">plante.search</field>
+            <field name="model">gestion_culture.plante</field>
+            <field name="arch" type="xml">
+                <search>
+                      <field name="statut"/>
+                      <field name="type"/>
+
+                     
+                </search>
+            </field>
+        </record>
+
+        <!-- Action pour ouvrir la vue liste des plante -->
+        <record model="ir.actions.act_window" id="gestion_culture.action_view_plante">
+            <field name="name">Liste des plantes</field>
+            <field name="res_model">gestion_culture.plante</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="view_id" ref="gestion_culture.plante_kanban_view"/>
+        
+        </record> 
+           <menuitem name="Plantes" id="gestion_culture.menu_2_Plante" parent="gestion_culture.menu_2" sequence="1"/>
+<menuitem name="Liste des Plantes" id="gestion_culture.menu_2_listes_plantes" parent="gestion_culture.menu_2_Plante" action="gestion_culture.action_view_plante"/>
+
+        <!-- Menu pour afficher le calendrier de récolte -->
+        <menuitem name="Calendrier de Recolte" id="menu_recolte_calendar" parent="gestion_culture.menu_6" action="action_recolte_calendar"/>
+
+        <!-- Menu pour afficher le calendrier de plantation -->
+        <menuitem name="Calendrier de Plantation" id="menu_plantation_calendar" parent="gestion_culture.menu_6" action="action_plantation_calendar"/>
+
+   
+      
+
+        <!-- Menu pour ajouter une nouvelle plante -->
+        <menuitem name="Ajouter une nouvelle plante" id="menu_add_new_plante" parent="gestion_culture.menu_7_configure_Plantes" action="action_new_plante" sequence="2"/>
+
+    </data>
+</odoo>

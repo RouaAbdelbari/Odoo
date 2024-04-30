@@ -1,0 +1,62 @@
+<odoo>
+    <data>
+        <!-- Vue pour la liste de cultures -->
+        <record model="ir.ui.view" id="gestion_culture.menu_root-view">
+            <field name="name">Liste de culture</field>
+            <field name="model">gestion_culture.plante</field>
+            <field name="arch" type="xml">
+               <tree decoration-success="statut == 'recolte'">
+                   <field name="name_seq"/>
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="date_prevue_recolte"/>
+                    <field name="statut" decoration-warning="statut == 'recolte'" decoration-danger="statut == 'en_cours'"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <!-- Action window -->
+        <record model="ir.actions.act_window" id="gestion_culture.action_window">
+            <field name="name">Listes des plantes</field>
+            <field name="res_model">gestion_culture.plante</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+        <!-- Action server -->
+        <record model="ir.actions.server" id="gestion_culture.action_server">
+            <field name="name">gestion_culture server</field>
+            <field name="model_id" ref="model_gestion_culture_plante"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = {
+                  "type": "ir.actions.act_window",
+                  "view_mode": "tree,form",
+                  "res_model": model._name,
+                }
+            </field>
+        </record>
+
+        <!-- Menus -->
+        <menuitem name="Culture" id="gestion_culture.menu_root" web_icon="gestion_culture,static/description/icon.png"/>
+
+        <menuitem name="Parcelles de terrain" id="gestion_culture.menu_2" parent="gestion_culture.menu_root"/>
+        <menuitem name="Maladie" id="gestion_culture.menu_3" parent="gestion_culture.menu_root"/>
+        <menuitem name="Analyse et rapport" id="gestion_culture.menu_4" parent="gestion_culture.menu_root"/>
+        <menuitem name="Ressources" id="gestion_culture.menu_5" parent="gestion_culture.menu_root"/>
+        <menuitem name="Planification Culturale" id="gestion_culture.menu_6" parent="gestion_culture.menu_root"/>
+        <menuitem name="Configuration" id="gestion_culture.menu_7" parent="gestion_culture.menu_root"/>
+
+        <!-- Sous-menus -->
+        <menuitem name="Parcelle" id="gestion_culture.menu_2_parcelles" parent="gestion_culture.menu_2" action="gestion_culture.action_window"/>
+        <menuitem name="Liste des Parcelles" id="gestion_culture.menu_2_listes_parcelles" parent="gestion_culture.menu_2" action="gestion_culture.action_window"/>
+        <menuitem name="Liste des Plantes" id="gestion_culture.menu_2_listes_plantes" parent="gestion_culture.menu_2" action="gestion_culture.action_window"/>
+
+        <menuitem name="Configurer les Techniciens" id="gestion_culture.menu_7_configure_Techniciens" parent="gestion_culture.menu_7" action="gestion_culture.action_window"/>
+        <menuitem name="Configurer les flottes" id="gestion_culture.menu_7_configure_flottes" parent="gestion_culture.menu_7" action="gestion_culture.action_window"/>
+        <menuitem name="Configurer les Parcelles" id="gestion_culture.menu_7_configure_Parcelles" parent="gestion_culture.menu_7" action="gestion_culture.action_window"/>
+        <menuitem name="Configurer les Plantes" id="gestion_culture.menu_7_configure_Plantes" parent="gestion_culture.menu_7" action="gestion_culture.action_window"/>
+
+        <menuitem name="Gestion des maladies détectées" id="gestion_culture.menu_3_gestion_maladies" parent="gestion_culture.menu_3" action="gestion_culture.action_window"/>
+    </data>
+</odoo>

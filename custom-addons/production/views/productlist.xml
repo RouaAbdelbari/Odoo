@@ -1,0 +1,45 @@
+ <odoo>
+    <data>
+        <!-- Vue pour le formulaire d'enregistrement de production alimentaire -->
+        <record id="view_production_alimentaire_form" model="ir.ui.view">
+            <field name="name">Formulaire d'enregistrement de production alimentaire</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <data>
+                    <!-- Ajouter les champs personnalisés à l'intérieur du notebook existant -->
+                    <xpath expr="//notebook" position="inside">
+                        <page string="Caractéristiques plante">
+                            <group>
+                                <group>
+                                    <field name="quantite"/>
+                                    <field name="date"/>
+                                </group>
+                                <group>
+                                    <field name="statut"/>
+                                </group>
+                            </group>
+                            <!-- Ajoutez les champs manquants ici -->
+                            <group>
+                                <field name="plante_id"/>
+                                <field name="responsable_id"/>
+                            </group>
+                        </page>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <!-- Action pour ouvrir le formulaire d'enregistrement de production alimentaire -->
+        <record id="action_open_production_alimentaire" model="ir.actions.act_window">
+            <field name="name">Enregistrement de production alimentaire</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_production_alimentaire_form"/>
+            <field name="target">current</field>
+        </record>
+
+        <menuitem id="menu_open_production_form_alimentaire" name="Production alimentaire" parent="menu_open_production_form" action="action_open_production_alimentaire"/>
+    </data>
+</odoo>

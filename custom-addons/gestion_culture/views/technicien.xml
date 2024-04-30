@@ -1,0 +1,65 @@
+<odoo>
+    <data>
+        <record id="view_employee_form" model="ir.ui.view">
+            <field name="name">Formulaire</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//form" position="inside">
+                        <!-- Ajoutez vos champs personnalisés ici -->
+                    </xpath>
+                </data>
+            </field>
+        </record>
+      <record model="ir.ui.view" id="view_employee_kanban">
+    <field name="name">Liste des employées</field>
+    <field name="model">hr.employee</field>
+    <field name="arch" type="xml">
+        <kanban>
+            <templates>
+                <t t-name="kanban-box">
+                    <div class="o_kanban_record">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_image">
+                                <img t-att-src="kanban_image('hr.employee', 'image_128', record.id.raw_value)" style="height: 100px; float: left; width: 40%;"/>
+                            </div>
+                            <div style="margin-left: 45%; margin-top: 5%; width: 55%; text-align: left;">
+                                <div><field name="name"/></div>
+                                <div><field name="work_email"/></div>
+                                <div><field name="department_id"/></div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </templates>
+        </kanban>
+    </field>
+</record>
+
+        <!-- Ajouter une action pour ouvrir le formulaire -->
+        <record id="action_employee_form" model="ir.actions.act_window">
+    <field name="name">Employé</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">hr.employee</field>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="view_employee_form"/>
+    <field name="target">current</field>
+</record>
+<record id="action_employee_kanban" model="ir.actions.act_window">
+    <field name="name">Liste des employées</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">hr.employee</field>
+    <field name="view_mode">kanban,form,tree</field>
+    <field name="view_id" ref="view_employee_kanban"/>
+    <field name="target">current</field>
+</record>
+
+   <menuitem name="Techniciens" id="gestion_culture.menu_5_Techniciens" parent="gestion_culture.menu_5" action="action_employee_kanban" sequence="1"/>
+        <!-- Menu pour ajouter un technicien -->
+       <menuitem name="Ajouter un Technicien" id="gestion_culture.menu_7_add_new_technicien" parent="gestion_culture.menu_7_configure_Techniciens" action="action_employee_form"/>
+
+    </data>
+</odoo>
+
+                         

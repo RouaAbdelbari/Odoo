@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data >
+        <record id="maladie_detectee_mail_template" model="mail.template">
+            <field name="name">gestion_cultures.maladie_detectee_mail_template</field>
+            <field name="model_id" ref="gestion_cultures.maladie_detectee"/>
+            <field name="subject">Détails de la maladie détectée : {object.name}</field>
+            <field name="email_from">${'noreply@example.com'}</field>
+            <field name="email_to">${ 'noreply@example.com'}</field>
+            <field name="body_html" type="html">
+                <![CDATA[
+                <p>Bonjour,</p>
+                <p>Nous vous informons qu'une maladie a été détectée sur la culture : <strong>${object.name}</strong>.</p>
+                <p>Veuillez trouver ci-dessous les détails :</p>
+                <ul>
+                    <li>Nom de la maladie : ${object.disease_name}</li>
+                    <li>Photo : <img src="${object.disease_image_url}" alt="Image de la maladie"/></li>
+                    <li>Type de culture affectée : ${object.affected_culture_type}</li>
+                    <li>Traitement recommandé : ${object.advised_treatment}</li>
+                </ul>
+                <p>Merci.</p>
+                <p>Cordialement,</p>
+                <p>L'équipe Gestion Cultures</p>
+                ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

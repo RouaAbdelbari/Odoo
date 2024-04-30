@@ -1,0 +1,57 @@
+<odoo>
+    <data>
+        <template id="report_maladie_detectee_detail">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="row">
+                            <h2 style="text-align: center;">Rapport maladie</h2>
+                        </div>
+                        <div class="content">
+                            <table class="table table-condensed" style="width: 100%; border-collapse: collapse; margin: auto;">
+                                <tr>
+                                    <th style="width: 20%; border: 1px solid #000; height: 50px;">Order Reference</th>
+                                    <td style="width: 80%; border: 1px solid #000; height: 50px;"><span t-field="o.reference"/></td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 20%; border: 1px solid #000; height: 50px;">Nom de la maladie</th>
+                                    <td style="width: 80%; border: 1px solid #000; height: 50px;"><span t-field="o.nom_maladie"/></td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 20%; border: 1px solid #000; height: 50px;">Type de culture affectée </th>
+                                    <td style="width: 80%; border: 1px solid #000; height: 50px;"><span t-field="o.type_culture_affectee"/></td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 20%; border: 1px solid #000; height: 50px;">Traitement conseillé</th>
+                                    <td style="width: 80%; border: 1px solid #000; height: 50px;"><span t-field="o.traitement_conseille"/></td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 20%; border: 1px solid #000; height: 50px;">Symptomes</th>
+                                    <td style="width: 80%; border: 1px solid #000; height: 50px;"><span t-field="o.symptomes"/></td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 20%; border: 1px solid #000; height: 50px;">Date de detection</th>
+                                    <td style="width: 80%; border: 1px solid #000; height: 50px;"><span t-field="o.date_detection"/></td>
+                                </tr>
+                            </table>
+                            <div class="row">
+                                <div class="col-xs-12" style="text-align: right;">
+                                    <span>Rapport maladie</span><br/>
+                                    <span>Date et heure d'impression: </span><span t-esc="'%s' % time.strftime('%Y-%m-%d %H:%M:%S')"/><br/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+         <record id="action_window" model="ir.actions.act_window">
+            <field name="name">Rapport des maladies des cultures</field>
+            <field name="res_model">report.maladie.detectee.detail</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_report_maladie_detectee_detail"/>
+        </record>
+        <menuitem name="Rapport des maladies des cultures" id="gestion_culture.menu_4_rapport_maladies" parent="gestion_culture.menu_4" action="gestion_culture.action_window"/>
+
+    </data>
+</odoo>

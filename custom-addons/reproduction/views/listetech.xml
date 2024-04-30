@@ -1,0 +1,145 @@
+
+<odoo>
+    <data>
+        <!-- Vue formulaire pour les techniciens -->
+        <record model="ir.ui.view" id="reproduction.techniciens_form_view">
+            <field name="name">Formulaire technicien</field>
+            <field name="model">reproduction.technicien</field>
+            <field name="arch" type="xml">
+                <form string="Formulaire technicien">
+              
+                    <header>
+                        <button id="button_confirm" name="action_confirm" string="Confirm" class="btn-primary" status="draft" type="object" />
+                    </header>
+                    <sheet>
+                        <div name="button_box" class="oe_button_box">
+                            <button name="187" icon="fa-users" type="action">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_text">info</span>
+                                </div>
+                            </button>
+                        </div>
+                        <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                        <div class="row">
+                            <div style="position: relative;">
+                                <field name="image" widget="image" class="oe_avatar" string="" style="position: absolute; top: 0; right: 0; width: 150px; height: 150px; padding-bottom:10px"/>
+                            </div>
+                            <div style="position: relative;">
+                                <group class="oe_title">
+                                    <h1>
+                                        <field name="name" readonly="1" style="padding-left: 10px;"/>
+                                    </h1>
+                                </group>
+                            </div>
+                            <group>
+                                <field name="name"/>
+                                <field name="adresse"/>
+                                <field name="telephone"/>
+                            </group>
+                            <group>
+                                <field name="date_embauche"/>
+                                <field name="specialite"/>
+                                <field name="active" invisible="1"/>
+                                <field name="email"/>
+                            </group>
+                            <notebook>
+                                <page name="information_personnelle" string="Information personnelle">
+                                    <group string="Information personnelle">
+                                        <field name="compte_bancaire_id"/> 
+                                        <field name="numero_secu_sociale"/>
+                                        <field name="numero_passeport"/>
+                                        <field name="etat_civil"/>
+                                        <field name="telephone_urgence"/>
+                                    </group>
+                                    <group string="Citoyenneté">
+                                        <field name="distance_travail_domicile"/>
+                                        <field name="lieu_naissance"/>
+                                        <field name="pays_naissance"/>
+                                    </group>
+                                    <group string="Contact privé">
+                                        <field name="telephone_urgence"/>
+                                    </group>
+                                </page>
+                                <page string="Compétences" name="competences">
+                                    <group>
+                                        <field name="competences"/>      
+                                    </group>          
+                                </page>
+                                <page string="Autres infos" name="autres_infos">
+                                    <group>
+                                        <field name="note"/>      
+                                    </group>          
+                                </page>
+                            </notebook>
+                        </div>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids"/>
+                        <field name="activity_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+   <!-- Vue Kanban pour les techniciens -->
+        <record model="ir.ui.view" id="reproduction.technicien_kanban_view">
+            <field name="name">Kanban techniciens</field>
+            <field name="model">reproduction.technicien</field>
+            <field name="arch" type="xml">
+                <kanban>
+            <templates>
+                <t t-name="kanban-box">
+                    <div class="o_kanban_record">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_image">
+                                <img t-att-src="kanban_image('reproduction.technicien', 'image', record.id.raw_value)" style="height: 100px; float: left; width: 40%;"/>
+                            </div>
+                            <div style="margin-left: 45%; margin-top: 5%; width: 55%; text-align: left;">
+                                <div><strong><field name="name"/></strong></div>
+                                <div><field name="specialite"/></div>
+                                <div><field name="telephone"/></div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </templates>
+        </kanban>
+    </field>
+</record>
+
+
+
+  
+         <!-- Action pour ouvrir la liste des techniciens -->
+        <record model="ir.actions.act_window" id="reproduction.technicien_action_window">
+            <field name="name">Liste des techniciens</field>
+            <field name="res_model">reproduction.technicien</field>
+            <field name="view_mode">kanban,form,tree</field>
+        </record>
+          <!-- Vue de recherche pour les techniciens -->
+        <record model="ir.ui.view" id="reproduction.technicien_view_search">
+            <field name="name">technicien.search</field>
+            <field name="model">reproduction.technicien</field>
+            <field name="arch" type="xml">
+                <search string="Recherche technicien">
+                    <field name="specialite"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Actions pour ouvrir le formulaire et la liste des techniciens -->
+        <record model="ir.actions.act_window" id="reproduction.menu_technicien">
+            <field name="res_model">reproduction.technicien</field>
+            <field name="name">Nouveau Technicien agricole</field>
+            <field name="view_mode">form</field>
+        </record>
+       
+        <!-- Menu pour ajouter un nouveau technicien -->
+        <menuitem name="Ajouter un technicien" id="reproduction.menu_add_technicien" parent="reproduction.menu_technicien_agricole" action="reproduction.menu_technicien"/>
+        
+        <!-- Menu pour afficher la liste des techniciens -->
+        <menuitem name="Équipe" id="reproduction.menu_team_action" parent="reproduction.menu_resources" action="reproduction.technicien_action_window"/>
+    </data>
+</odoo>
+     

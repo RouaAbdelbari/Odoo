@@ -1,0 +1,136 @@
+<odoo>
+    <data>
+        <!-- Vue formulaire pour une nouvelle parcelle -->
+        <record id="gestion_culture.parcelle_form_view" model="ir.ui.view">
+            <field name="name">Formulaire parcelle</field>
+            <field name="model">gestion_culture.parcelle</field>
+            <field name="arch" type="xml">
+                <form string="Formulaire parcelle">
+                   
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name_seq" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                         
+                            <field name="image" widget="image" class="oe_avatar" string="" />
+                            <field name="name"/>
+                            <field name="farming_seasons"/>
+                            <field name="superficie"/>
+                            <field name="agriculteur"/>
+                            <field name="etat"/>
+                            <button string="Recolté" type="object" name="mon_bouton" class="btn btn-primary mx-auto d-block"/>
+                        </group>
+                        <notebook>
+                            <page string="Agriculteur associé" name="agriculteur_associé">
+                                <group>
+                                    <field name="agriculteur"/>
+                                </group>
+                            </page>
+                            <page string="Notes" name="notes">
+                                <group>
+                                    <field name="etat"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                     <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Vue kanban pour afficher les parcelles -->
+        <record id="gestion_culture.parcelle_kanban_view" model="ir.ui.view">
+            <field name="name">Kanban parcelles</field>
+            <field name="model">gestion_culture.parcelle</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="o_kanban_record">
+                                <div class="oe_kanban_global_click">
+                                    <div class="oe_kanban_image">
+                                        <img t-att-src="kanban_image('gestion_culture.parcelle', 'image', record.id.raw_value)" style="height: 100px; float: left; width: 40%;"/>
+                                    </div>
+                                    <div style="margin-left: 45%; margin-top: 5%; width: 55%; text-align: left;">
+                                        <div class="oe_kanban_details">
+                                            <div><field name="name_seq" decoration="1"/></div>
+                                            <div class="kanban-name"><strong><field name="name"/></strong></div>
+                                            <div class="kanban-farming-seasons"><field name="farming_seasons"/></div>
+                                            <div class="kanban-agriculteur"><field name="agriculteur"/></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Vue liste pour toutes les parcelles -->
+        <record id="gestion_culture.parcelle_tree_view" model="ir.ui.view">
+            <field name="name">Liste des parcelles</field>
+            <field name="model">gestion_culture.parcelle</field>
+            <field name="arch" type="xml">
+                <tree string="Liste des parcelles">
+                  <field name="name_seq"/>
+                    <field name="name"/>
+                    <field name="superficie"/>
+                    <field name="agriculteur"/>
+                    <field name="etat"/>
+                </tree>
+            </field>
+        </record>
+     <record model="ir.ui.view" id="gestion_culture.parcelle_view_search">
+    <field name="name">gestion_culture.parcelle.search</field>
+    <field name="model">gestion_culture.parcelle</field>
+    <field name="arch" type="xml">
+        <search string="Emplacement">
+            <field name="emplacement"/>
+            <separator/>
+            
+            <searchpanel>
+                <field name="agriculteur" string="Agriculteur" enable_counters="1"/>
+                <field name="farming_seasons" string="Saison de culture" enable_counters="1"/>
+
+            </searchpanel>
+        </search>
+        
+            
+    </field>
+</record>
+
+
+
+        <!-- Action pour ouvrir la vue liste des parcelles -->
+        <record model="ir.actions.act_window" id="gestion_culture.action_window_parcelles">
+            <field name="name">Liste des parcelles</field>
+            <field name="res_model">gestion_culture.parcelle</field>
+            <field name="view_mode">kanban,tree,form,pivot,graph</field>
+            <field name="view_id" ref="gestion_culture.parcelle_kanban_view"/>
+        </record>
+
+        <!-- Action pour ouvrir le formulaire d'une nouvelle parcelle -->
+        <record model="ir.actions.act_window" id="gestion_culture.action_new_parcelle">
+            <field name="name">Nouvelle parcelle</field>
+            <field name="res_model">gestion_culture.parcelle</field>
+            <field name="view_mode">form</field>
+            
+        </record>
+
+        <!-- Menu pour gérer les parcelles -->
+        <menuitem name="Parcelles" id="gestion_culture.menu_2_parcelles" parent="gestion_culture.menu_2" sequence="1"/>
+        <!-- Menu pour ajouter une nouvelle parcelle -->
+        <menuitem name="Ajouter une nouvelle parcelle" id="gestion_culture.menu_7_add_new_parcelle" parent="gestion_culture.menu_7_configure_Parcelles" action="gestion_culture.action_new_parcelle" sequence="2"/>
+*
+        <!-- Menu pour afficher la liste des parcelles -->
+        <menuitem name="Liste des Parcelles" id="gestion_culture.menu_2_listes_parcelles" parent="gestion_culture.menu_2_parcelles" action="gestion_culture.action_window_parcelles" sequence="1"/>
+    </data>
+</odoo>
